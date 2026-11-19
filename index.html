@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity - Brand Audit</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-page: #ffffff;
+            --bg-surface: #f8fafc;
+            --bg-surface-hover: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent-gold: #d97706;
+            --accent-blue: #0284c7;
+            --accent-red: #dc2626;
+            --border: #e2e8f0;
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #ffffff;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .title-group h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
+        }
+
+        .btn {
+            background: #ffffff;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 0.45rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: var(--bg-surface-hover);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Mission Overview / Stepper */
+        .mission-banner {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.06);
+        }
+
+        .mission-intro {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            max-width: 880px;
+            font-weight: 500;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .step-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.15rem;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(2, 132, 199, 0.45);
+            box-shadow: 0 8px 18px -6px rgba(15, 23, 42, 0.08);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .step-num {
+            background: var(--accent-blue);
+            color: #ffffff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .step-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .step-card ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .step-card li {
+            margin-bottom: 0.35rem;
+            padding-left: 1.1rem;
+            position: relative;
+        }
+
+        .step-card li::before {
+            content: "•";
+            color: var(--accent-gold);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .rule-callout {
+            margin-top: 0.6rem;
+            padding: 0.45rem 0.65rem;
+            background: #fef2f2;
+            border-left: 3px solid var(--accent-red);
+            border-radius: 4px;
+            font-size: 0.78rem;
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        /* Group Selector Section */
+        .section-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .brand-pill {
+            background: #ffffff;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 1rem 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+        }
+
+        .brand-pill:hover {
+            background: var(--bg-surface);
+            transform: translateY(-2px);
+        }
+
+        .brand-pill.active {
+            border-color: var(--brand-color, var(--accent-blue));
+            background: var(--bg-surface);
+            box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.14);
+        }
+
+        .brand-pill .group-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .brand-pill .brand-icon {
+            font-size: 1.65rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .brand-pill .brand-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Active Workspace */
+        .workspace {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.1);
+        }
+
+        .workspace-banner {
+            padding: 1.75rem 2rem;
+            background: linear-gradient(135deg, var(--brand-color, #0284c7), #1e293b);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .workspace-title-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .workspace-logo {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+        }
+
+        .workspace-title-area h2 {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+        }
+
+        .workspace-title-area p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.92);
+            font-weight: 500;
+        }
+
+        .workspace-actions {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            padding: 0.55rem 1rem;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .workspace-body {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+            background: #ffffff;
+        }
+
+        @media (max-width: 900px) {
+            .workspace-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Questions List */
+        .questions-column h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-main);
+        }
+
+        .progress-text {
+            font-size: 0.82rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .question-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .question-card:focus-within {
+            border-color: var(--brand-color, var(--accent-blue));
+        }
+
+        .q-header {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .q-number {
+            background: #e2e8f0;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.55rem;
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .q-text {
+            font-weight: 600;
+            font-size: 0.98rem;
+            color: var(--text-main);
+        }
+
+        .q-notes {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.88rem;
+            resize: vertical;
+            min-height: 76px;
+            transition: border-color 0.2s;
+        }
+
+        .q-notes:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .q-notes::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Sidebar Checklist & Peer Qs */
+        .sidebar-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .sidebar-box h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--accent-gold);
+            margin-bottom: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin-bottom: 0.65rem;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 0.22rem;
+            accent-color: var(--accent-blue);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checklist-item.checked span {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .peer-notes {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 0.7rem;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.85rem;
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .peer-notes:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0f172a;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="title-group">
+            <h1>Activity - Brand Audit</h1>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Activity Brief & 4-Step Guide -->
+    <section class="mission-banner">
+        <p class="mission-intro">
+            In your assigned group, analyse a Malaysian brand and evaluate how it operates <em>as a brand—not just a product</em>.
+        </p>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-header">
+                    <span class="step-num">1</span>
+                    <h3>Gather Real Evidence</h3>
+                </div>
+                <ul>
+                    <li>Official website</li>
+                    <li>Social media (Instagram, TikTok, etc.)</li>
+                    <li>Advertisements or campaigns</li>
+                    <li>News articles or public perception</li>
+                </ul>
+                <div class="rule-callout">
+                    ⚠️ No assumptions allowed! Ground every point in real observation.
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <span class="step-num">2</span>
+                    <h3>Discuss All 5 Questions</h3>
+                </div>
+                <ul>
+                    <li>Go beyond description (don’t just state what it does)</li>
+                    <li>Explain <strong>why it matters</strong> & how it affects consumers</li>
+                    <li>Provide concrete examples wherever possible</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <span class="step-num">3</span>
+                    <h3>Presentation</h3>
+                </div>
+                <ul>
+                    <li>Brief introduction of your assigned brand</li>
+                    <li>Key insights from your group discussion</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <span class="step-num">4</span>
+                    <h3>Peer Engagement</h3>
+                </div>
+                <ul>
+                    <li>Listen actively while other groups present</li>
+                    <li>Ask <strong>at least one critical question</strong> to another group</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selected Brands Grid -->
+    <div class="section-header">
+        <h2>Selected Brands</h2>
+    </div>
+
+    <div class="brand-grid" id="brandGrid"></div>
+
+    <!-- Active Group Workspace -->
+    <section class="workspace" id="workspace">
+        <div class="workspace-banner" id="workspaceBanner">
+            <div class="workspace-title-area">
+                <div class="workspace-logo" id="wsIcon">🧋</div>
+                <div>
+                    <h2 id="wsTitle">Brand 1 – Tealive</h2>
+                    <p id="wsSubtitle">Lifestyle & Beverage • Assigned Brand Workspace</p>
+                </div>
+            </div>
+            <div class="workspace-actions">
+                <button class="btn-glass" onclick="exportSummaryTxt()">💾 Download Summary (.txt)</button>
+            </div>
+        </div>
+
+        <div class="workspace-body">
+            <div class="questions-column">
+                <h3>
+                    <span>Discussion Questions (5)</span>
+                    <span class="progress-text" id="progressText">0 / 5 Answered</span>
+                </h3>
+                <div id="questionsContainer"></div>
+            </div>
+
+            <aside>
+                <div class="sidebar-box">
+                    <h4>🔍 Step 1 Evidence Checklist</h4>
+                    <label class="checklist-item">
+                        <input type="checkbox" data-check="website" onchange="saveChecks()">
+                        <span>Checked Official Website</span>
+                    </label>
+                    <label class="checklist-item">
+                        <input type="checkbox" data-check="social" onchange="saveChecks()">
+                        <span>Reviewed Social Media (IG/TikTok)</span>
+                    </label>
+                    <label class="checklist-item">
+                        <input type="checkbox" data-check="ads" onchange="saveChecks()">
+                        <span>Analysed Ads / Campaigns</span>
+                    </label>
+                    <label class="checklist-item">
+                        <input type="checkbox" data-check="news" onchange="saveChecks()">
+                        <span>Checked News / Public Perception</span>
+                    </label>
+                    <label class="checklist-item">
+                        <input type="checkbox" data-check="pitch" onchange="saveChecks()">
+                        <span>Rehearsed Presentation</span>
+                    </label>
+                </div>
+
+                <div class="sidebar-box">
+                    <h4>💬 Peer Engagement Scratchpad</h4>
+                    <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem;">
+                        Draft your critical question(s) for other presenting groups here:
+                    </p>
+                    <textarea class="peer-notes" id="peerNotes" placeholder="e.g., Question for Brand 2 (AirAsia): How does..." oninput="savePeerNotes()"></textarea>
+                </div>
+            </aside>
+        </div>
+    </section>
+</main>
+
+<div class="toast" id="toast">Downloaded group summary!</div>
+
+<script>
+    const brandsData = [
+        {
+            id: 1,
+            name: "Tealive",
+            category: "Modern Lifestyle Tea",
+            icon: "🧋",
+            color: "#6d28d9",
+            questions: [
+                "How has Tealive built a strong identity in a highly saturated bubble tea market?",
+                "What emotional or lifestyle associations does Tealive create beyond its products?",
+                "How does Tealive compete against international bubble tea brands entering Malaysia?",
+                "What branding challenges might Tealive face as consumer preferences shift toward healthier options?",
+                "Should Tealive reposition itself as a lifestyle brand or remain product-focused? Justify your answer."
+            ]
+        },
+        {
+            id: 2,
+            name: "AirAsia",
+            category: "Aviation & Travel",
+            icon: "✈️",
+            color: "#dc2626",
+            questions: [
+                "How has AirAsia built a strong brand despite operating in a low-cost category?",
+                "In what ways does AirAsia go beyond being just a transportation service?",
+                "How has AirAsia managed brand perception during crises (e.g., delays, complaints)?",
+                "What are the risks of maintaining a low-cost positioning in today’s competitive airline industry?",
+                "How should AirAsia evolve its brand to remain relevant in the future?"
+            ]
+        },
+        {
+            id: 3,
+            name: "Padini",
+            category: "Fashion Retail",
+            icon: "👕",
+            color: "#0284c7",
+            questions: [
+                "How does Padini differentiate itself from global fast-fashion brands?",
+                "What type of consumer identity does Padini appeal to?",
+                "Is Padini more product-driven or brand-driven? Explain with examples.",
+                "What challenges does Padini face in maintaining relevance among younger consumers?",
+                "Should Padini move towards a more premium or sustainable positioning?"
+            ]
+        },
+        {
+            id: 4,
+            name: "Grab",
+            category: "Super App Ecosystem",
+            icon: "🚗",
+            color: "#059669",
+            questions: [
+                "How has Grab evolved from a service into a lifestyle ecosystem brand?",
+                "What role does customer experience play in Grab’s brand perception?",
+                "How do pricing and service issues affect trust in the Grab brand?",
+                "What are the branding challenges of being a “super app”?",
+                "How can Grab strengthen emotional connection with users beyond functionality?"
+            ]
+        },
+        {
+            id: 5,
+            name: "Proton",
+            category: "Automotive",
+            icon: "🚘",
+            color: "#1d4ed8",
+            questions: [
+                "How has Proton’s brand perception changed over time?",
+                "What does Proton represent to Malaysian consumers beyond cars?",
+                "How has collaboration with global partners influenced Proton’s brand?",
+                "What are the key challenges Proton faces against international competitors?",
+                "Should Proton focus more on national identity or global competitiveness in its branding?"
+            ]
+        },
+        {
+            id: 6,
+            name: "Gardenia",
+            category: "FMCG Bakery",
+            icon: "🍞",
+            color: "#b45309",
+            questions: [
+                "How does Gardenia maintain strong brand loyalty in a low-involvement product category?",
+                "What signals of trust and quality does Gardenia communicate to consumers?",
+                "Is Gardenia’s branding more functional or emotional?",
+                "What challenges arise from competing primarily on habit and availability?",
+                "How can Gardenia innovate its branding without confusing its core audience?"
+            ]
+        },
+        {
+            id: 7,
+            name: "Julie’s",
+            category: "FMCG Biscuits",
+            icon: "🍪",
+            color: "#d97706",
+            questions: [
+                "How has Julie’s built a brand that resonates both locally and internationally?",
+                "What emotional storytelling elements are present in Julie’s branding?",
+                "How does Julie’s differentiate itself in a crowded FMCG market?",
+                "What challenges arise when expanding into global markets?",
+                "Should Julie’s modernise its brand or maintain its current identity?"
+            ]
+        }
+    ];
+
+    let currentBrandId = 1;
+    let storageState = JSON.parse(localStorage.getItem('myBrandAuditState_v4') || '{}');
+
+    function init() {
+        renderBrandGrid();
+        selectBrand(currentBrandId);
+        const peerBox = document.getElementById('peerNotes');
+        peerBox.value = storageState.peerNotes || '';
+    }
+
+    function renderBrandGrid() {
+        const grid = document.getElementById('brandGrid');
+        grid.innerHTML = brandsData.map(b => `
+            <div class="brand-pill ${b.id === currentBrandId ? 'active' : ''}" 
+                 style="--brand-color: ${b.color}" 
+                 onclick="selectBrand(${b.id})">
+                <span class="group-tag">Brand ${b.id}</span>
+                <span class="brand-icon">${b.icon}</span>
+                <span class="brand-name">${b.name}</span>
+            </div>
+        `).join('');
+    }
+
+    function selectBrand(id) {
+        currentBrandId = id;
+        const brand = brandsData.find(b => b.id === id);
+        renderBrandGrid();
+
+        const banner = document.getElementById('workspaceBanner');
+        banner.style.background = `linear-gradient(135deg, ${brand.color}, #1e293b)`;
+        document.getElementById('wsIcon').textContent = brand.icon;
+        document.getElementById('wsTitle').textContent = `Brand ${brand.id} – ${brand.name}`;
+        document.getElementById('wsSubtitle').textContent = `${brand.category} • Assigned Brand Workspace`;
+
+        const brandNotes = (storageState.notes && storageState.notes[id]) || {};
+        const qContainer = document.getElementById('questionsContainer');
+        qContainer.innerHTML = brand.questions.map((q, idx) => `
+            <div class="question-card" style="--brand-color: ${brand.color}">
+                <div class="q-header">
+                    <span class="q-number">Q${idx + 1}</span>
+                    <div class="q-text">${q}</div>
+                </div>
+                <textarea class="q-notes" 
+                          data-q="${idx}" 
+                          placeholder="Evidence & analysis (Why it matters + real examples)..."
+                          oninput="saveNote(${id}, ${idx}, this.value)">${brandNotes[idx] || ''}</textarea>
+            </div>
+        `).join('');
+
+        const brandChecks = (storageState.checks && storageState.checks[id]) || {};
+        document.querySelectorAll('.checklist-item input').forEach(cb => {
+            const key = cb.dataset.check;
+            cb.checked = !!brandChecks[key];
+            cb.parentElement.classList.toggle('checked', cb.checked);
+        });
+
+        updateProgress();
+    }
+
+    function saveNote(brandId, qIndex, value) {
+        if (!storageState.notes) storageState.notes = {};
+        if (!storageState.notes[brandId]) storageState.notes[brandId] = {};
+        storageState.notes[brandId][qIndex] = value;
+        localStorage.setItem('myBrandAuditState_v4', JSON.stringify(storageState));
+        updateProgress();
+    }
+
+    function saveChecks() {
+        if (!storageState.checks) storageState.checks = {};
+        if (!storageState.checks[currentBrandId]) storageState.checks[currentBrandId] = {};
+        document.querySelectorAll('.checklist-item input').forEach(cb => {
+            storageState.checks[currentBrandId][cb.dataset.check] = cb.checked;
+            cb.parentElement.classList.toggle('checked', cb.checked);
+        });
+        localStorage.setItem('myBrandAuditState_v4', JSON.stringify(storageState));
+    }
+
+    function savePeerNotes() {
+        storageState.peerNotes = document.getElementById('peerNotes').value;
+        localStorage.setItem('myBrandAuditState_v4', JSON.stringify(storageState));
+    }
+
+    function updateProgress() {
+        const brandNotes = (storageState.notes && storageState.notes[currentBrandId]) || {};
+        let answered = 0;
+        for (let i = 0; i < 5; i++) {
+            if (brandNotes[i] && brandNotes[i].trim().length > 0) answered++;
+        }
+        document.getElementById('progressText').textContent = `${answered} / 5 Answered`;
+    }
+
+    function generateSummaryText() {
+        const brand = brandsData.find(b => b.id === currentBrandId);
+        const brandNotes = (storageState.notes && storageState.notes[currentBrandId]) || {};
+        let out = `ACTIVITY - BRAND AUDIT\n`;
+        out += `Selected Brand: Brand ${brand.id} – ${brand.name} (${brand.category})\n`;
+        out += `====================================================\n\n`;
+
+        brand.questions.forEach((q, idx) => {
+            out += `Q${idx + 1}: ${q}\n`;
+            out += `Notes/Evidence: ${brandNotes[idx] ? brandNotes[idx].trim() : '[No notes entered yet]'}\n\n`;
+        });
+
+        if (storageState.peerNotes && storageState.peerNotes.trim()) {
+            out += `====================================================\n`;
+            out += `PEER ENGAGEMENT QUESTIONS:\n${storageState.peerNotes.trim()}\n`;
+        }
+        return out;
+    }
+
+    function exportSummaryTxt() {
+        const brand = brandsData.find(b => b.id === currentBrandId);
+        const text = generateSummaryText();
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Brand_${brand.id}_${brand.name}_Brand_Audit.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Downloaded group summary!');
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    init();
+</script>
+</body>
+</html>
